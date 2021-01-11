@@ -3,6 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:order_form/import.dart';
 
 class PreOrderScreen extends StatelessWidget {
+  Route getRoute() {
+    return MaterialPageRoute(builder: (_) => this);
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -14,12 +18,31 @@ class PreOrderScreen extends StatelessWidget {
 }
 
 class _PreOrderView extends StatelessWidget {
-  final _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     final preOrderCubit = BlocProvider.of<PreOrderCubit>(context);
+    return BlocListener<PreOrderCubit, PreOrderState>(
+      listenWhen: (previous, current) => previous.status != current.status,
+      listener: (context, preOrderState) {
+        if (preOrderState.status == PreOrderStatus.valid) {
+          preOrderCubit.resetStatus();
+          navigator.push(OrderScreen(
+            photoUrl: preOrderState.photoUrl,
+            positionCount: preOrderState.positionCount,
+            additionalItems: kStubAdditionalItems,
+          ).getRoute());
+        }
+      },
+      child: _PreOrderBody(),
+    );
+  }
+}
 
+class _PreOrderBody extends StatelessWidget {
+  final _formKey = GlobalKey<FormState>();
+  @override
+  Widget build(BuildContext context) {
+    final preOrderCubit = BlocProvider.of<PreOrderCubit>(context);
     return Scaffold(
       body: Form(
         key: _formKey,

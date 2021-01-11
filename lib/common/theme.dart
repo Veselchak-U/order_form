@@ -13,4 +13,12 @@ final theme = ThemeData(
       padding: EdgeInsets.all(0),
     ),
   ),
+  textTheme: TextTheme(
+    headline5: TextStyle(
+      fontWeight: FontWeight.bold, // primaryColor
+    ),
+    headline6: TextStyle(
+      fontWeight: FontWeight.bold, // primaryColor
+    ),
+  ),
 );
