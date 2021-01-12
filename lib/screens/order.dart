@@ -4,15 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:order_form/import.dart';
 
 class OrderScreen extends StatelessWidget {
-  OrderScreen({
-    this.photoUrl,
-    this.positionCount,
-    this.additionalItems,
-  });
+  OrderScreen(this.order);
 
-  final String photoUrl;
-  final int positionCount;
-  final List<AdditionalItemModel> additionalItems;
+  final OrderModel order;
 
   Route getRoute() {
     return MaterialPageRoute(builder: (_) => this);
@@ -21,11 +15,7 @@ class OrderScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => OrderCubit(
-        photoUrl: photoUrl,
-        positionCount: positionCount,
-        additionalItems: additionalItems,
-      ),
+      create: (_) => OrderCubit(order),
       lazy: false,
       child: _OrderView(),
     );
@@ -68,6 +58,7 @@ class _AdditionalBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final orderCubit = BlocProvider.of<OrderCubit>(context);
+    final items = orderCubit.state.order.additionalItems;
     List<Widget> children = [];
     children.add(Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
@@ -83,8 +74,8 @@ class _AdditionalBlock extends StatelessWidget {
     ));
     children.addAll(
       List.generate(
-        orderCubit.state.positionCount,
-        (index) => _AdditionalElement(orderCubit.state.additionalItems[index]),
+        items.length,
+        (index) => _AdditionalElement(items[index]),
       ),
     );
     return Padding(
@@ -131,7 +122,7 @@ class _AdditionalElement extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 8),
             child: Text(
-              '+${item.priceInKopecks ~/ 100} р.',
+              '+${item.price ~/ 100} р.',
               style: TextStyle(fontWeight: FontWeight.bold),
             ),
           ),
@@ -144,10 +135,12 @@ class _AdditionalElement extends StatelessWidget {
 class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final orderCubit = BlocProvider.of<OrderCubit>(context);
+    final order = orderCubit.state.order;
     return Padding(
       padding: EdgeInsets.all(8),
       child: Text(
-        'Произвольный текст как заголовок',
+        order.displayName,
         style: Theme.of(context).textTheme.headline5,
       ),
     );
@@ -158,6 +151,7 @@ class _MainImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final orderCubit = BlocProvider.of<OrderCubit>(context);
+    final order = orderCubit.state.order;
     final imageWidth = MediaQuery.of(context).size.width;
     final imageHeight = imageWidth * 3 / 4;
 
@@ -165,7 +159,7 @@ class _MainImage extends StatelessWidget {
       width: imageWidth,
       height: imageHeight,
       fit: BoxFit.cover,
-      imageUrl: orderCubit.state.photoUrl,
+      imageUrl: order.photoUrl,
       placeholder: (context, url) => Center(
         child: CircularProgressIndicator(
           strokeWidth: 2,

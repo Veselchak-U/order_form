@@ -62,7 +62,7 @@ class PreOrderCubit extends Cubit<PreOrderState> {
     emit(state.copyWith(status: PreOrderStatus.invalid));
   }
 
-  // Simple check URL
+  // Simple URL validator
   bool _isValidUri(Uri uri) {
     bool result = false;
     try {

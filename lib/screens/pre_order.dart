@@ -26,11 +26,16 @@ class _PreOrderView extends StatelessWidget {
       listener: (context, preOrderState) {
         if (preOrderState.status == PreOrderStatus.valid) {
           preOrderCubit.resetStatus();
-          navigator.push(OrderScreen(
+          // final List<AdditionalItemModel> additionalItems =
+          //     kStubAdditionalItems.take(preOrderState.positionCount);
+          final order = OrderModel(
+            id: '${DateTime.now()}',
+            displayName: 'Произвольный текст как заголовок',
             photoUrl: preOrderState.photoUrl,
-            positionCount: preOrderState.positionCount,
-            additionalItems: kStubAdditionalItems,
-          ).getRoute());
+            additionalItems:
+                kStubAdditionalItems.take(preOrderState.positionCount).toList(),
+          );
+          navigator.push(OrderScreen(order).getRoute());
         }
       },
       child: _PreOrderBody(),

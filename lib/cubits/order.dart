@@ -1,21 +1,12 @@
 import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:order_form/import.dart';
 
 part 'order.g.dart';
 
 class OrderCubit extends Cubit<OrderState> {
-  OrderCubit({
-    @required String photoUrl,
-    @required int positionCount,
-    @required List<AdditionalItemModel> additionalItems,
-  }) : super(OrderState(
-          photoUrl: photoUrl,
-          positionCount: positionCount,
-          additionalItems: additionalItems,
-        ));
+  OrderCubit(OrderModel order) : super(OrderState(order: order));
 }
 
 enum OrderStatus { invalid, downloading, error, valid }
@@ -24,21 +15,15 @@ enum OrderStatus { invalid, downloading, error, valid }
 class OrderState extends Equatable {
   const OrderState({
     this.status = OrderStatus.invalid,
-    this.photoUrl,
-    this.positionCount,
-    this.additionalItems,
+    this.order,
   });
 
   final OrderStatus status;
-  final String photoUrl;
-  final int positionCount;
-  final List<AdditionalItemModel> additionalItems;
+  final OrderModel order;
 
   @override
   List<Object> get props => [
         status,
-        photoUrl,
-        positionCount,
-        additionalItems,
+        order,
       ];
 }
