@@ -21,6 +21,7 @@ class _PreOrderView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final preOrderCubit = BlocProvider.of<PreOrderCubit>(context);
+
     return BlocListener<PreOrderCubit, PreOrderState>(
       listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, preOrderState) {
@@ -108,13 +109,20 @@ class _ButtonContent extends StatelessWidget {
       builder: (context, PreOrderState preOrderState) {
         Widget result;
         if (preOrderState.status == PreOrderStatus.downloading) {
-          result = SizedBox(
-            width: 20,
-            height: 20,
-            child: CircularProgressIndicator(
-              value: preOrderState.downloadProgress,
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-            ),
+          result = Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Загрузка'),
+              const SizedBox(width: 20),
+              SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(
+                  value: preOrderState.downloadProgress,
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                ),
+              ),
+            ],
           );
         } else if (preOrderState.status == PreOrderStatus.error) {
           result = Text('Ошибка загрузки URL');

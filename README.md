@@ -1,4 +1,4 @@
-# order_form
+# Order form
 
 A test Flutter project.
 Technologies: BLoC v.6 (Cubit), code generation.

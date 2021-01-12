@@ -15,10 +15,10 @@ final theme = ThemeData(
   ),
   textTheme: TextTheme(
     headline5: TextStyle(
-      fontWeight: FontWeight.bold, // primaryColor
+      fontWeight: FontWeight.bold,
     ),
     headline6: TextStyle(
-      fontWeight: FontWeight.bold, // primaryColor
+      fontWeight: FontWeight.bold,
     ),
   ),
 );

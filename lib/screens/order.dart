@@ -56,53 +56,40 @@ class _OrderBody extends StatelessWidget {
   }
 }
 
-class _TotalAmount extends StatelessWidget {
+class _MainImage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final orderCubit = BlocProvider.of<OrderCubit>(context);
+    final order = orderCubit.state.order;
+    final imageWidth = MediaQuery.of(context).size.width;
+    final imageHeight = imageWidth * 3 / 4;
+
+    return CachedNetworkImage(
+      width: imageWidth,
+      height: imageHeight,
+      fit: BoxFit.cover,
+      imageUrl: order.photoUrl,
+      placeholder: (context, url) => Center(
+        child: CircularProgressIndicator(
+          strokeWidth: 2,
+        ),
+      ),
+      errorWidget: (context, url, error) => Placeholder(),
+    );
+  }
+}
+
+class _Header extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final orderCubit = BlocProvider.of<OrderCubit>(context);
     final order = orderCubit.state.order;
 
     return Padding(
-      padding: const EdgeInsets.only(top: 32),
-      child: Container(
-        color: Colors.grey[400],
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 5, 16, 16),
-          child: Container(
-            foregroundDecoration: DottedDecoration(
-              linePosition: LinePosition.top,
-              dash: const <int>[2, 5],
-              strokeWidth: 2,
-            ),
-            decoration: DottedDecoration(
-              dash: const <int>[2, 5],
-              strokeWidth: 2,
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(top: 16),
-              child: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Дополнительно',
-                      style: Theme.of(context).textTheme.subtitle1,
-                    ),
-                  ),
-                  Text(
-                    'x${order.totalCount}',
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
-                  SizedBox(width: 16),
-                  Text(
-                    // (order.totalCost / 100).toStringAsFixed(2), - not comma format delimiter
-                    toMoneyFormat(order.totalCost),
-                    style: Theme.of(context).textTheme.subtitle1,
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
+      padding: EdgeInsets.all(8),
+      child: Text(
+        order.displayName,
+        style: Theme.of(context).textTheme.headline5,
       ),
     );
   }
@@ -252,41 +239,54 @@ class _CountPicker extends StatelessWidget {
   }
 }
 
-class _Header extends StatelessWidget {
+class _TotalAmount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final orderCubit = BlocProvider.of<OrderCubit>(context);
     final order = orderCubit.state.order;
 
     return Padding(
-      padding: EdgeInsets.all(8),
-      child: Text(
-        order.displayName,
-        style: Theme.of(context).textTheme.headline5,
-      ),
-    );
-  }
-}
-
-class _MainImage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    final orderCubit = BlocProvider.of<OrderCubit>(context);
-    final order = orderCubit.state.order;
-    final imageWidth = MediaQuery.of(context).size.width;
-    final imageHeight = imageWidth * 3 / 4;
-
-    return CachedNetworkImage(
-      width: imageWidth,
-      height: imageHeight,
-      fit: BoxFit.cover,
-      imageUrl: order.photoUrl,
-      placeholder: (context, url) => Center(
-        child: CircularProgressIndicator(
-          strokeWidth: 2,
+      padding: const EdgeInsets.only(top: 32),
+      child: Container(
+        color: Colors.grey[400],
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 5, 16, 16),
+          child: Container(
+            foregroundDecoration: DottedDecoration(
+              linePosition: LinePosition.top,
+              dash: const <int>[2, 5],
+              strokeWidth: 2,
+            ),
+            decoration: DottedDecoration(
+              dash: const <int>[2, 5],
+              strokeWidth: 2,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      'Дополнительно',
+                      style: Theme.of(context).textTheme.subtitle1,
+                    ),
+                  ),
+                  Text(
+                    'x${order.totalCount}',
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                  const SizedBox(width: 16),
+                  Text(
+                    // (order.totalCost / 100).toStringAsFixed(2), - разделитель точка, нужна запятая
+                    '${toMoneyFormat(order.totalCost)} р.',
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
-      errorWidget: (context, url, error) => Placeholder(),
     );
   }
 }
