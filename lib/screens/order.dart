@@ -63,7 +63,6 @@ class _MainImage extends StatelessWidget {
     final order = orderCubit.state.order;
     final imageWidth = MediaQuery.of(context).size.width;
     final imageHeight = imageWidth * 3 / 4;
-
     return CachedNetworkImage(
       width: imageWidth,
       height: imageHeight,
@@ -84,7 +83,6 @@ class _Header extends StatelessWidget {
   Widget build(BuildContext context) {
     final orderCubit = BlocProvider.of<OrderCubit>(context);
     final order = orderCubit.state.order;
-
     return Padding(
       padding: EdgeInsets.all(8),
       child: Text(
@@ -101,7 +99,6 @@ class _AdditionalBlock extends StatelessWidget {
     final orderCubit = BlocProvider.of<OrderCubit>(context);
     final items = orderCubit.state.order.additionalItems;
     final List<Widget> children = [];
-
     children.add(
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
@@ -142,7 +139,6 @@ class _AdditionalElement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final imageSize = 40.0;
-
     return Padding(
       padding: const EdgeInsets.all(8),
       child: Row(
@@ -189,7 +185,6 @@ class _CountPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final OrderCubit orderCubit = BlocProvider.of<OrderCubit>(context);
-
     return SizedBox(
       height: 36,
       width: 100,
@@ -244,7 +239,6 @@ class _TotalAmount extends StatelessWidget {
   Widget build(BuildContext context) {
     final orderCubit = BlocProvider.of<OrderCubit>(context);
     final order = orderCubit.state.order;
-
     return Padding(
       padding: const EdgeInsets.only(top: 32),
       child: Container(

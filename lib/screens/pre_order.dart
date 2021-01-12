@@ -21,7 +21,6 @@ class _PreOrderView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final preOrderCubit = BlocProvider.of<PreOrderCubit>(context);
-
     return BlocListener<PreOrderCubit, PreOrderState>(
       listenWhen: (previous, current) => previous.status != current.status,
       listener: (context, preOrderState) {
