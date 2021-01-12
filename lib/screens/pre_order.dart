@@ -26,8 +26,6 @@ class _PreOrderView extends StatelessWidget {
       listener: (context, preOrderState) {
         if (preOrderState.status == PreOrderStatus.valid) {
           preOrderCubit.resetStatus();
-          // final List<AdditionalItemModel> additionalItems =
-          //     kStubAdditionalItems.take(preOrderState.positionCount);
           final order = OrderModel(
             id: '${DateTime.now()}',
             displayName: 'Произвольный текст как заголовок',

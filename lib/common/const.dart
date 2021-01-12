@@ -6,7 +6,7 @@ const List<AdditionalItemModel> kStubAdditionalItems = [
       displayName: 'Приборы',
       photoUrl:
           'https://finikito.ru/image/cache/catalog/pics/%D0%BD%D0%B0%D0%B1%D0%BE%D1%80-%C2%ABshark%C2%BB-auto_width_1000.jpg',
-      price: 1000),
+      price: 100),
   AdditionalItemModel(
       id: '2',
       displayName: 'Соус тар-тар',
@@ -27,8 +27,8 @@ const List<AdditionalItemModel> kStubAdditionalItems = [
       price: 3500),
   AdditionalItemModel(
       id: '5',
-      displayName: 'Лаваш грузинский',
+      displayName: 'Хачапури с сыром и зеленью',
       photoUrl:
-          'https://cdn2.arora.pro/d/upload/98232ca5-1f26-45f5-947d-53b15fa41765/original/6a7102cd-346f-408f-b207-a9bf00f96e8b.jpg',
-      price: 3500),
+          'https://static.tildacdn.com/tild3763-3763-4862-a234-656639346463/____.jpg',
+      price: 35000),
 ];

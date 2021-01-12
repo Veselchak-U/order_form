@@ -59,7 +59,8 @@ class _AdditionalBlock extends StatelessWidget {
   Widget build(BuildContext context) {
     final orderCubit = BlocProvider.of<OrderCubit>(context);
     final items = orderCubit.state.order.additionalItems;
-    List<Widget> children = [];
+    final List<Widget> children = [];
+
     children.add(Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
       child: Row(
@@ -98,6 +99,7 @@ class _AdditionalElement extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final imageSize = 40.0;
+
     return Padding(
       padding: const EdgeInsets.all(8),
       child: Row(
@@ -109,21 +111,83 @@ class _AdditionalElement extends StatelessWidget {
             imageUrl: item.photoUrl,
             errorWidget: (context, url, error) => Placeholder(),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Text(
-              item.displayName,
-              maxLines: 3,
-              overflow: TextOverflow.fade,
-              softWrap: false,
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Text(
+                item.displayName,
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ),
-          Spacer(),
-          Padding(
-            padding: const EdgeInsets.only(left: 8),
-            child: Text(
-              '+${item.price ~/ 100} р.',
-              style: TextStyle(fontWeight: FontWeight.bold),
+          _CountPicker(item),
+          SizedBox(
+            width: 60,
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                '+${item.price ~/ 100} р.',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _CountPicker extends StatelessWidget {
+  _CountPicker(this.item);
+
+  final AdditionalItemModel item;
+
+  @override
+  Widget build(BuildContext context) {
+    final OrderCubit orderCubit = BlocProvider.of<OrderCubit>(context);
+
+    return SizedBox(
+      height: 36,
+      width: 100,
+      child: Stack(
+        alignment: AlignmentDirectional.center,
+        overflow: Overflow.visible,
+        children: [
+          Container(
+            height: 32,
+            width: 64,
+            color: Colors.grey[300],
+          ),
+          Text('${item.count}'),
+          Positioned(
+            left: 0,
+            width: 36,
+            child: ElevatedButton(
+              onPressed: () {
+                orderCubit.removeItem(item);
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.grey[300],
+                onPrimary: Colors.black,
+                shape: CircleBorder(),
+              ),
+              child: Icon(Icons.remove, size: 18),
+            ),
+          ),
+          Positioned(
+            right: 0,
+            width: 36,
+            child: ElevatedButton(
+              onPressed: () {
+                orderCubit.addItem(item);
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Colors.white,
+                onPrimary: Colors.black,
+                shape: CircleBorder(),
+              ),
+              child: Icon(Icons.add, size: 18),
             ),
           ),
         ],
@@ -137,6 +201,7 @@ class _Header extends StatelessWidget {
   Widget build(BuildContext context) {
     final orderCubit = BlocProvider.of<OrderCubit>(context);
     final order = orderCubit.state.order;
+
     return Padding(
       padding: EdgeInsets.all(8),
       child: Text(
