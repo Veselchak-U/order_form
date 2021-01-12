@@ -12,8 +12,8 @@ class OrderModel extends Equatable {
     @required this.displayName,
     @required this.photoUrl,
     this.additionalItems,
-    this.totalCount,
-    this.totalCost,
+    this.totalCount = 0,
+    this.totalCost = 0,
   });
 
   final String id;

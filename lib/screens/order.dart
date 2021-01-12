@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:order_form/import.dart';
@@ -48,7 +49,60 @@ class _OrderBody extends StatelessWidget {
           _MainImage(),
           _Header(),
           _AdditionalBlock(),
+          _TotalAmount(),
         ],
+      ),
+    );
+  }
+}
+
+class _TotalAmount extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final orderCubit = BlocProvider.of<OrderCubit>(context);
+    final order = orderCubit.state.order;
+
+    return Padding(
+      padding: const EdgeInsets.only(top: 32),
+      child: Container(
+        color: Colors.grey[400],
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(16, 5, 16, 16),
+          child: Container(
+            foregroundDecoration: DottedDecoration(
+              linePosition: LinePosition.top,
+              dash: const <int>[2, 5],
+              strokeWidth: 2,
+            ),
+            decoration: DottedDecoration(
+              dash: const <int>[2, 5],
+              strokeWidth: 2,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      'Дополнительно',
+                      style: Theme.of(context).textTheme.subtitle1,
+                    ),
+                  ),
+                  Text(
+                    'x${order.totalCount}',
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                  SizedBox(width: 16),
+                  Text(
+                    // (order.totalCost / 100).toStringAsFixed(2), - not comma format delimiter
+                    toMoneyFormat(order.totalCost),
+                    style: Theme.of(context).textTheme.subtitle1,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }
@@ -61,18 +115,20 @@ class _AdditionalBlock extends StatelessWidget {
     final items = orderCubit.state.order.additionalItems;
     final List<Widget> children = [];
 
-    children.add(Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-      child: Row(
-        children: [
-          Text(
-            'Дополнительно',
-            style: Theme.of(context).textTheme.headline6,
-          ),
-          Spacer(),
-        ],
+    children.add(
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+        child: Row(
+          children: [
+            Text(
+              'Дополнительно',
+              style: Theme.of(context).textTheme.headline6,
+            ),
+            Spacer(),
+          ],
+        ),
       ),
-    ));
+    );
     children.addAll(
       List.generate(
         items.length,
