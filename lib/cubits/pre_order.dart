@@ -4,6 +4,7 @@ import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:order_form/common/helper.dart';
 
 part 'pre_order.g.dart';
 
@@ -11,9 +12,9 @@ class PreOrderCubit extends Cubit<PreOrderState> {
   PreOrderCubit() : super(const PreOrderState());
 
   String validateUrl(String value) {
-    final uri = Uri.tryParse(value);
-    if (uri != null && _isValidUri(uri)) {
-      emit(state.copyWith(photoUrl: uri.toString()));
+    final url = urlValidator(value);
+    if (url != null) {
+      emit(state.copyWith(photoUrl: url));
       return null;
     } else {
       return 'Введите корректный URL';
@@ -60,20 +61,6 @@ class PreOrderCubit extends Cubit<PreOrderState> {
 
   void resetStatus() {
     emit(state.copyWith(status: PreOrderStatus.invalid));
-  }
-
-  // Simple URL validator
-  bool _isValidUri(Uri uri) {
-    bool result = false;
-    try {
-      final origin = uri.origin;
-      if (origin.length > 11) {
-        result = true;
-      }
-    } on dynamic {
-      result = false;
-    }
-    return result;
   }
 }
 

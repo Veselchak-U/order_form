@@ -2,6 +2,25 @@ import 'package:intl/intl.dart';
 import 'package:intl/number_symbols.dart';
 import 'package:intl/number_symbols_data.dart';
 
+// Simple URL validator
+String urlValidator(String value) {
+  final uri = Uri.tryParse(value);
+  if (uri == null) {
+    return null;
+  }
+  bool result = false;
+  try {
+    final origin = uri.origin;
+    if (origin.length > 11) {
+      result = true;
+    }
+  } on dynamic {
+    result = false;
+  }
+  return result ? uri.toString() : null;
+}
+
+// Convertor: 350000 -> 3 500,00
 String toMoneyFormat(num number) {
   numberFormatSymbols['money'] = const NumberSymbols(
     NAME: "money",
