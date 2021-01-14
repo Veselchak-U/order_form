@@ -13,7 +13,7 @@ class OrderCubit extends Cubit<OrderState> {
       return;
     }
     final newItem = item.copyWith(count: item.count + 1);
-    final newOrder = state.order;
+    final newOrder = state.order.copyWith();
     final index = newOrder.additionalItems.indexOf(item);
     newOrder.additionalItems[index] = newItem;
     emit(state.copyWith(order: newOrder.recalc()));
@@ -24,7 +24,7 @@ class OrderCubit extends Cubit<OrderState> {
       return;
     }
     final newItem = item.copyWith(count: item.count - 1);
-    final newOrder = state.order;
+    final newOrder = state.order.copyWith();
     final index = newOrder.additionalItems.indexOf(item);
     newOrder.additionalItems[index] = newItem;
     emit(state.copyWith(order: newOrder.recalc()));
