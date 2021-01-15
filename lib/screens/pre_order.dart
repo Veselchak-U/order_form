@@ -5,7 +5,7 @@ import 'package:order_form/import.dart';
 class PreOrderScreen extends StatelessWidget {
   Route get route => MaterialPageRoute(
         builder: (_) => this,
-        settings: RouteSettings(name: '/pre_order'),
+        settings: const RouteSettings(name: '/pre_order'),
       );
 
   @override
@@ -62,7 +62,7 @@ class _PreOrderBody extends StatelessWidget {
                 ),
                 const SizedBox(height: 40),
                 TextFormField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: '* URL фото',
                     helperText: '',
                   ),
@@ -70,10 +70,10 @@ class _PreOrderBody extends StatelessWidget {
                   textInputAction: TextInputAction.next,
                   keyboardType: TextInputType.url,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (value) => preOrderCubit.validateUrl(value),
+                  validator: preOrderCubit.validateUrl,
                 ),
                 TextFormField(
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: '* Количество позиций',
                     helperText: '',
                   ),
@@ -81,7 +81,7 @@ class _PreOrderBody extends StatelessWidget {
                   textInputAction: TextInputAction.next,
                   keyboardType: TextInputType.number,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  validator: (value) => preOrderCubit.validateCount(value),
+                  validator: preOrderCubit.validateCount,
                 ),
                 const SizedBox(height: 40),
                 ElevatedButton(
@@ -104,30 +104,29 @@ class _PreOrderBody extends StatelessWidget {
 class _ButtonContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder(
-      cubit: BlocProvider.of<PreOrderCubit>(context),
-      builder: (context, PreOrderState preOrderState) {
+    return BlocBuilder<PreOrderCubit, PreOrderState>(
+      builder: (context, preOrderState) {
         Widget result;
         if (preOrderState.status == PreOrderStatus.downloading) {
           result = Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Загрузка'),
+              const Text('Загрузка'),
               const SizedBox(width: 20),
               SizedBox(
                 width: 20,
                 height: 20,
                 child: CircularProgressIndicator(
                   value: preOrderState.downloadProgress,
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
                 ),
               ),
             ],
           );
         } else if (preOrderState.status == PreOrderStatus.error) {
-          result = Text('Ошибка загрузки URL');
+          result = const Text('Ошибка загрузки URL');
         } else {
-          result = Text('Перейти к заказу');
+          result = const Text('Перейти к заказу');
         }
         return Container(
           width: 200,

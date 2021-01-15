@@ -7,18 +7,18 @@ part 'additional_item.g.dart';
 @CopyWith()
 class AdditionalItemModel extends Equatable {
   const AdditionalItemModel({
-    this.id,
+    @required this.id,
     @required this.displayName,
     @required this.photoUrl,
-    this.count = 0,
     @required this.price,
+    this.count = 0,
   });
 
   final String id;
   final String displayName;
   final String photoUrl;
-  final int count; // количество единиц текущей позиции
   final int price; // цена за единицу в копейках
+  final int count; // количество единиц текущей позиции
 
   @override
   List<Object> get props => [

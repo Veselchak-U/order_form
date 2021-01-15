@@ -6,14 +6,14 @@ final theme = ThemeData(
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       elevation: 6.0,
-      textStyle: TextStyle(
+      textStyle: const TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.bold,
       ),
-      padding: EdgeInsets.all(0),
+      padding: const EdgeInsets.all(0),
     ),
   ),
-  textTheme: TextTheme(
+  textTheme: const TextTheme(
     headline5: TextStyle(
       fontWeight: FontWeight.bold,
     ),

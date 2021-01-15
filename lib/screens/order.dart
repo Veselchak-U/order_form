@@ -31,7 +31,7 @@ class _OrderView extends StatelessWidget {
       builder: (context, orderState) {
         return Scaffold(
           appBar: AppBar(
-            title: Text('Бланк заказа'),
+            title: const Text('Бланк заказа'),
             centerTitle: true,
           ),
           body: _OrderBody(),
@@ -69,12 +69,12 @@ class _MainImage extends StatelessWidget {
       height: imageHeight,
       fit: BoxFit.cover,
       imageUrl: order.photoUrl,
-      placeholder: (context, url) => Center(
+      placeholder: (context, url) => const Center(
         child: CircularProgressIndicator(
           strokeWidth: 2,
         ),
       ),
-      errorWidget: (context, url, error) => Placeholder(),
+      errorWidget: (context, url, error) => const Placeholder(),
     );
   }
 }
@@ -85,7 +85,7 @@ class _Header extends StatelessWidget {
     final orderCubit = BlocProvider.of<OrderCubit>(context);
     final order = orderCubit.state.order;
     return Padding(
-      padding: EdgeInsets.all(8),
+      padding: const EdgeInsets.all(8),
       child: Text(
         order.displayName,
         style: Theme.of(context).textTheme.headline5,
@@ -109,7 +109,7 @@ class _AdditionalBlock extends StatelessWidget {
               'Дополнительно',
               style: Theme.of(context).textTheme.headline6,
             ),
-            Spacer(),
+            const Spacer(),
           ],
         ),
       ),
@@ -139,7 +139,7 @@ class _AdditionalElement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final imageSize = 40.0;
+    const imageSize = 40.0;
     return Padding(
       padding: const EdgeInsets.all(8),
       child: Row(
@@ -149,7 +149,7 @@ class _AdditionalElement extends StatelessWidget {
             height: imageSize,
             fit: BoxFit.cover,
             imageUrl: item.photoUrl,
-            errorWidget: (context, url, error) => Placeholder(),
+            errorWidget: (context, url, error) => const Placeholder(),
           ),
           Expanded(
             child: Padding(
@@ -168,7 +168,7 @@ class _AdditionalElement extends StatelessWidget {
               alignment: Alignment.centerRight,
               child: Text(
                 '+${item.price ~/ 100} р.',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
           ),
@@ -209,9 +209,9 @@ class _CountPicker extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 primary: Colors.grey[300],
                 onPrimary: Colors.black,
-                shape: CircleBorder(),
+                shape: const CircleBorder(),
               ),
-              child: Icon(Icons.remove, size: 18),
+              child: const Icon(Icons.remove, size: 18),
             ),
           ),
           Positioned(
@@ -224,9 +224,9 @@ class _CountPicker extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 primary: Colors.white,
                 onPrimary: Colors.black,
-                shape: CircleBorder(),
+                shape: const CircleBorder(),
               ),
-              child: Icon(Icons.add, size: 18),
+              child: const Icon(Icons.add, size: 18),
             ),
           ),
         ],

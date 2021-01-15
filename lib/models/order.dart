@@ -8,7 +8,7 @@ part 'order.g.dart';
 @CopyWith()
 class OrderModel extends Equatable {
   const OrderModel({
-    this.id,
+    @required this.id,
     @required this.displayName,
     @required this.photoUrl,
     this.additionalItems,

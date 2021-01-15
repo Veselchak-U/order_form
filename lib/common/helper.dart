@@ -23,7 +23,7 @@ String urlValidator(String value) {
 // Convertor: 350000 -> 3 500,00
 String toMoneyFormat(num number) {
   numberFormatSymbols['money'] = const NumberSymbols(
-    NAME: "money",
+    NAME: 'money',
     DECIMAL_SEP: ',',
     GROUP_SEP: '\u00A0',
     PERCENT: '%',

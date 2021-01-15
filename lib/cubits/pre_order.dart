@@ -31,14 +31,14 @@ class PreOrderCubit extends Cubit<PreOrderState> {
     }
   }
 
-  void tryCacheImageFile() async {
+  Future<void> tryCacheImageFile() async {
     final stream = DefaultCacheManager().getImageFile(
       state.photoUrl,
       withProgress: true,
     );
     StreamSubscription<FileResponse> subscription;
     subscription = stream.listen(
-      (FileResponse response) {
+      (response) {
         if (response is DownloadProgress) {
           emit(state.copyWith(
               status: PreOrderStatus.downloading,
@@ -52,7 +52,7 @@ class PreOrderCubit extends Cubit<PreOrderState> {
       onError: (error) {
         emit(state.copyWith(status: PreOrderStatus.error));
         subscription.cancel();
-        Future.delayed(Duration(seconds: 2),
+        Future.delayed(const Duration(seconds: 2),
             () => emit(state.copyWith(status: PreOrderStatus.invalid)));
       },
       cancelOnError: true,
