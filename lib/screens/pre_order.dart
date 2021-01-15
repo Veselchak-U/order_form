@@ -3,9 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:order_form/import.dart';
 
 class PreOrderScreen extends StatelessWidget {
-  Route getRoute() {
-    return MaterialPageRoute(builder: (_) => this);
-  }
+  Route get route => MaterialPageRoute(
+        builder: (_) => this,
+        settings: RouteSettings(name: '/pre_order'),
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +34,7 @@ class _PreOrderView extends StatelessWidget {
             additionalItems:
                 kStubAdditionalItems.take(preOrderState.positionCount).toList(),
           );
-          navigator.push(OrderScreen(order).getRoute());
+          navigator.push(OrderScreen(order).route);
         }
       },
       child: _PreOrderBody(),

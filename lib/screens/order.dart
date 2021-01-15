@@ -9,9 +9,10 @@ class OrderScreen extends StatelessWidget {
 
   final OrderModel order;
 
-  Route getRoute() {
-    return MaterialPageRoute(builder: (_) => this);
-  }
+  Route get route => MaterialPageRoute(
+        builder: (_) => this,
+        settings: RouteSettings(name: '/order?name=${order.displayName}'),
+      );
 
   @override
   Widget build(BuildContext context) {
